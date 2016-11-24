@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "7H3MP52MUZ.com.musala.telenorselfcare",
+                "paths": [ "/deepLink/*"]
+            }
+        ]
+    }
+}
