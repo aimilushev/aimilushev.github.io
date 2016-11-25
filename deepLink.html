@@ -66,9 +66,14 @@ window.alert(intent_url);
 				location.replace(intent_url);
 
 				setTimeout(function() {
+					location.replace(applink);
+
+					setTimeout(function() {
 					location.replace(fallback_url_android);
 				
-			}, 2000);
+					}, 1000);
+				
+				}, 500);
 			}
 
 		} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
