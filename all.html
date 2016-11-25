@@ -24,6 +24,9 @@
 			event.preventDefault();
 		}
 
+		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+		window.alert("usragent ="+userAgent);
+
 		if (location.hash != "" && location.search.indexOf("__deeplinkme_hash=") == -1) {
 			fragment = encodeURIComponent(location.hash.substring(1))
 			joiner = location.search != "" ? '&' : '?'
@@ -34,7 +37,7 @@
 			window.alert("onova strannoto");
 		}
 		else {
-			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+			
 			if (/Windows/i.test(userAgent) || ) {  //WINDOWS PHONE - redirect to custom scheme
 				console.log("other")
 				// window.alert("other");
@@ -82,7 +85,7 @@
 				location.replace(applink);
 			}
 
-			window.alert("userAgent="+userAgent);
+
 
 
 		} 
