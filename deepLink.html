@@ -7,9 +7,9 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<script>
 		var appname = "TestDeepLink";
-	var applink = "mytelenor://deepLinkCallback";  // id = nil
+	var applink = "mytelenorbulgaria://deepLinkCallback";  // id = nil
 	var fallback_url_android = "https://play.google.com/store/apps/details?id=bg.telenor.mytelenor";
-	var fallback_url_ios = "https://itunes.apple.com/us/app/google-maps-navigation-transit/id585027354?mt=8"
+	var fallback_url_ios = "https://itunes.apple.com/us/app/google-maps-navigation-transit/id585027354?mt=8"//Set correct url for appstore when app is published
 	var android_package_name = "bg.telenor.mytelenor";
 </script>
 
@@ -40,18 +40,19 @@
 
 		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
+		//Transfer query string passed after "?" in the url of this page to the custom scheme app link
 		if (location.search != "") {
 			applink = applink + "/" + location.search.substring(1)
 		}
 
 			
-		if (/Windows/i.test(userAgent)) {  //WINDOWS PHONE - redirect to custom scheme
+		if (/Windows/i.test(userAgent)) {  //WINDOWS PHONE - redirect to the app , if not present automatically starts a search in windows store searching for "mytelenorbulgaria". When publishing app to store verify this search is valid
 			location.replace(applink);
 		}
-		else if (/android/i.test(userAgent)) {// ****** ANDROID *****
+		else if (/android/i.test(userAgent)) {// ANDROID - check if opened from generic browser or chrome
 			
 			if (
-			navigator.userAgent.indexOf('Version/') > -1 // generic Android Browser
+			navigator.userAgent.indexOf('Version/') > -1 // generic Android Browser - iframe + fallback
 			|| navigator.userAgent.indexOf('Firefox/') > -1
 			) {
 				i = document.getElementById('i');
@@ -66,7 +67,7 @@
 				}
 			}, 500);
 			}
-			else if (navigator.userAgent.indexOf('Chrome/') > -1) { // Google Chrome
+			else if (navigator.userAgent.indexOf('Chrome/') > -1) { // Google Chrome - intent + showing buttons redirecting to app or store
 				parts = applink.match(/^([^:]+):(.*)/);
 				uri_scheme = parts[1];
 				uri_data   = parts[2];
@@ -86,7 +87,7 @@
 				
 			}
 
-		} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+		} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { //Universal links don't go to browser if app is installed , otherwise fallback to appstore
 			location.replace(fallback_url_ios)
 		}
 		else {  //ALL OTHER - redirect to custom scheme
