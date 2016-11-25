@@ -19,9 +19,23 @@
 
 	<iframe id="i" style="display:none" height=0 width=0></iframe>
 
+	<section id="buttons" class="col-xs-8 col-xs-offset-2" style="display:none;">
+		<button type="button" onclick='window.location = applink'>OPEN THE APP</button>
+		<button type="button" class="second" onclick='window.location = fallback_url'>
+				DOWNLOAD APP
+		</button>
+	</section>
+
 	<script>
 		document.ontouchmove = function(event){
 			event.preventDefault();
+		}
+
+		// Needed when we android intent does not work when opening this page from another web page, not from another app
+		function show_buttons ()
+		{
+			var buttons = document.getElementById('buttons');
+			buttons.style.display = 'block';
 		}
 
 		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -50,7 +64,7 @@
 				else {
 					location.replace(fallback_url_android);
 				}
-			}, 2000);
+			}, 500);
 			}
 			else if (navigator.userAgent.indexOf('Chrome/') > -1) { // Google Chrome
 				parts = applink.match(/^([^:]+):(.*)/);
@@ -62,18 +76,14 @@
 				";scheme=" + uri_scheme +
 				";package=" + android_package_name +
 				";end";
-window.alert(intent_url);
+
 				location.replace(intent_url);
 
 				setTimeout(function() {
-					location.replace(applink);
-
-					setTimeout(function() {
-					location.replace(fallback_url_android);
+					show_buttons();
+				}, 1000);
 				
-					}, 1000);
 				
-				}, 500);
 			}
 
 		} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
