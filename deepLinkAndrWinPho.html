@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<iframe style="display:none" height=0 width=0 src="mytelenor://deepLinkCallback/"></iframe>
+<script>
+		var start = Date.now();
+		function try_close(){
+			location.replace('about:blank');
+		}
+
+		function store_or_close(){
+			var now = Date.now();
+			if (now - start > 3000) {
+				try_close();
+			} else {
+				window.location.replace("https://play.google.com/store/apps/details?id=bg.telenor.mytelenor");
+				setInterval(try_close, 1000);
+			}
+		}
+
+		setInterval(store_or_close, 2000);
+</script>
+
+</body>
+</html>
+
+
+
+
+
