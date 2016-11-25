@@ -54,6 +54,16 @@
 					i = document.getElementById('i');
 				i.src = applink;
 				
+				setTimeout(function() {
+					if (i.contentDocument) {
+						window.alert("android, going back");
+						history.length > 1 ? history.back() : "We need an alternative to this: open('about:', '_self').close()";
+					}
+					else {
+						window.alert("android, going to store");
+						location.replace(fallback_url_android);
+					}
+				}, 200);
 				}
 				else if (navigator.userAgent.indexOf('Chrome/') > -1) { // Google Chrome
 					window.alert("android chrome, userAgent="+userAgent);
@@ -68,18 +78,14 @@
 					";end";
 
 					location.replace(intent_url);
-				}
 
-				setTimeout(function() {
-					if (i.contentDocument) {
-						window.alert("android, going back");
-						history.length > 1 ? history.back() : "We need an alternative to this: open('about:', '_self').close()";
-					}
-					else {
+					setTimeout(function() {
 						window.alert("android, going to store");
 						location.replace(fallback_url_android);
-					}
+					
 				}, 200);
+				}
+
 			} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
 				console.log("ios")
 				window.alert("ios");
