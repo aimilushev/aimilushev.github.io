@@ -38,7 +38,7 @@
 
 			if (/android/i.test(userAgent)) {// ****** ANDROID *****
 				console.log("android")
-				window.alert("android");
+				window.alert("android , userAgent="+userAgent);
 				if (
 				navigator.userAgent.indexOf('Version/') > -1 // generic Android Browser
 				|| navigator.userAgent.indexOf('Firefox/') > -1
