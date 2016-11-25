@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<script>
 		var appname = "TestDeepLink";
-	var applink = "mytelenor://deepLinkCallback/";  // id = nil
+	var applink = "mytelenor://deepLinkCallback";  // id = nil
 	var fallback_url_android = "https://play.google.com/store/apps/details?id=bg.telenor.mytelenor";
 	var fallback_url_ios = "https://itunes.apple.com/us/app/google-maps-navigation-transit/id585027354?mt=8"
 	var android_package_name = "bg.telenor.mytelenor";
@@ -27,7 +27,7 @@
 		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 		if (location.search != "") {
-			applink = applink + ocation.search.substring(1)
+			applink = applink + "/" + location.search.substring(1)
 		}
 
 			
