@@ -35,10 +35,14 @@
 		}
 		else {
 			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-			if (/android/i.test(userAgent)) {// ****** ANDROID *****
+			if (/Windows/i.test(userAgent) || ) {  //WINDOWS PHONE - redirect to custom scheme
+				console.log("other")
+				// window.alert("other");
+				location.replace(applink);
+			}
+			else if (/android/i.test(userAgent)) {// ****** ANDROID *****
 				console.log("android")
-				window.alert("android , userAgent="+userAgent);
+				// window.alert("android , userAgent="+userAgent);
 				if (
 				navigator.userAgent.indexOf('Version/') > -1 // generic Android Browser
 				|| navigator.userAgent.indexOf('Firefox/') > -1
@@ -74,9 +78,11 @@
 			}
 			else {  //ALL OTHER - WINDOWS PHONE - redirect to custom scheme
 				console.log("other")
-				window.alert("other");
+				// window.alert("other");
 				location.replace(applink);
 			}
+
+			window.alert("userAgent="+userAgent);
 
 
 		} 
