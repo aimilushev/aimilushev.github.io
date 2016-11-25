@@ -1,15 +1,81 @@
 <!DOCTYPE HTML>
-<html lang="en-US">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="1;url="https://itunes.apple.com/us/app/google-maps-navigation-transit/id585027354?mt=8">
-        <script type="text/javascript">
-            window.location.href = "https://itunes.apple.com/us/app/google-maps-navigation-transit/id585027354?mt=8"
-        </script>
-        <title>Page Redirection</title>
-    </head>
-    <body>
-        <!-- Note: don't tell people to `click` the link, just tell them that it is a link. -->
-        If you are not redirected automatically, follow the <a href='http://example.com'>link to example</a>
-    </body>
+<html>
+<head>
+	<title>Launching App...</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script>
+		var appname = "TestDeepLink";
+	var applink = "mytelenor://deepLinkCallback";  // id = nil
+	var fallback_url_android = "https://play.google.com/store/apps/details?id=bg.telenor.mytelenor";
+	var fallback_url_ios = "https://itunes.apple.com/us/app/google-maps-navigation-transit/id585027354?mt=8"
+	var android_package_name = "bg.telenor.mytelenor";
+</script>
+
+
+</head>
+<body class="text-center os-android">
+
+	<iframe id="i" style="display:none" height=0 width=0></iframe>
+
+	<script>
+		document.ontouchmove = function(event){
+			event.preventDefault();
+		}
+
+		if (location.hash != "" && location.search.indexOf("__deeplinkme_hash=") == -1) {
+			fragment = encodeURIComponent(location.hash.substring(1))
+			joiner = location.search != "" ? '&' : '?'
+			dehashed_url = location.href.replace(/#.*/, joiner + '__deeplinkme_hash=' + fragment)
+			location.replace(dehashed_url)
+
+			console.log("onova strannoto")
+		}
+		else {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+			if (/android/i.test(userAgent)) {// ****** ANDROID *****
+				console.log("android")
+				if (
+				navigator.userAgent.indexOf('Version/') > -1 // generic Android Browser
+				|| navigator.userAgent.indexOf('Firefox/') > -1
+				) {
+					i = document.getElementById('i');
+				i.src = applink;
+				setTimeout(function() {
+					if (i.contentDocument) {
+						history.length > 1 ? history.back() : "We need an alternative to this: open('about:', '_self').close()";
+					}
+					else {
+						location.replace(fallback_url_android);
+					}
+				}, 200);
+				}
+				else if (navigator.userAgent.indexOf('Chrome/') > -1) { // Google Chrome
+					parts = applink.match(/^([^:]+):(.*)/);
+					uri_scheme = parts[1];
+					uri_data   = parts[2];
+
+					intent_url = "intent:" + uri_data +
+					"#Intent" +
+					";scheme=" + uri_scheme +
+					";package=" + android_package_name +
+					";end";
+
+					location.replace(intent_url);
+				}
+			} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+				console.log("ios")
+				location.replace(fallback_url_ios)
+			}
+			else {  //ALL OTHER - WINDOWS PHONE - redirect to custom scheme
+				console.log("other")
+				location.replace(applink);
+			}
+
+
+		} 
+</script>
+</body>
 </html>
