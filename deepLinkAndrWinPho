@@ -2,12 +2,7 @@
 <html>
 <body>
 
-<!-- <iframe style="display:none" height=0 width=0 src="mytelenor://deepLinkCallback/"></iframe> -->
-
-<iframe src="http://abv.bg">
-  <p>Your browser does not support iframes.</p>
-</iframe>
-
+<iframe src="https://www.facebook.com/"></iframe>
 <!-- <script>
 		var start = Date.now();
 		function try_close(){
@@ -25,8 +20,8 @@
 		}
 
 		setInterval(store_or_close, 2000);
-</script>
- -->
+</script> -->
+
 </body>
 </html>
 
